@@ -1,0 +1,271 @@
+/* GENEL AYARLAR VE RENK/FONT PALETİ */
+:root {
+    --bg-color: #fdfaf6;
+    --text-color: #3a3a3a;
+    --primary-color: #eab4d1;
+    --accent-color: #f7d977;
+    --polaroid-bg: #fff;
+    --sky-dark: #1a233a;
+    --sky-light: #3e527c;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Raleway', sans-serif;
+    --font-caption: 'Dancing Script', cursive;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: none; /* Gerçek imleci gizle */
+}
+
+/* SİHİRLİ İMLEÇ STİLİ */
+.sparkle-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease, transform 0.1s ease;
+}
+
+.sparkle-trail {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    animation: fadeOut 0.8s forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+/* GİRİŞ EKRANI */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.8s ease;
+}
+#preloader h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 8vw, 4rem);
+}
+#preloader p {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    margin-top: 1rem;
+    opacity: 0.8;
+}
+
+/* ANA İÇERİK (Giriş sonrası) */
+#main-content {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+section {
+    padding: 120px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 80vh;
+}
+
+h1, h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 700;
+}
+
+h2 {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+}
+
+p {
+    max-width: 650px;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    line-height: 1.8;
+    margin-top: 1rem;
+}
+
+/* GENEL ANİMASYONLAR */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+}
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* HARF HARF YAZMA ANİMASYONU */
+.animate-letters span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+    animation: letter-reveal 0.8s forwards;
+}
+
+@keyframes letter-reveal {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* POLAROID GALERİ */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 50px;
+    margin-top: 4rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.polaroid {
+    background-color: var(--polaroid-bg);
+    padding: 15px 15px 70px 15px;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: rotate(0deg);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+}
+.polaroid:nth-child(2n) { transform: rotate(4deg); }
+.polaroid:nth-child(3n) { transform: rotate(-3deg); }
+.polaroid:nth-child(4n) { transform: rotate(2deg); }
+
+.polaroid:hover {
+    transform: scale(1.1) rotate(0deg) !important;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.polaroid img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.polaroid .caption {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    font-family: var(--font-caption);
+    font-size: 1.8rem;
+    color: var(--text-color);
+    text-align: center;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.polaroid:hover .caption {
+    opacity: 1;
+}
+
+/* DİLEK FENERİ BÖLÜMÜ */
+#lantern-sky {
+    position: relative; /* <-- DÜZELTME BURADA */
+    background: linear-gradient(to bottom, var(--sky-dark), var(--sky-light));
+    color: #fff;
+    overflow: hidden;
+}
+
+#release-lantern-btn {
+    margin-top: 2rem;
+    padding: 15px 35px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+#release-lantern-btn:hover {
+    transform: scale(1.1);
+    background-color: #ffeb99;
+}
+
+.lantern {
+    position: absolute;
+    bottom: -150px; /* Ekranın altından başla */
+    width: 80px;
+    height: 120px;
+    background-image: radial-gradient(circle at 50% 50%, #f7d977, #f2c14d 70%, transparent 70%);
+    border-radius: 45% 45% 30% 30%;
+    box-shadow: 0 0 20px 5px #f7d977;
+    filter: blur(1px);
+    animation: float-up 15s linear forwards;
+    pointer-events: none;
+}
+@keyframes float-up {
+    0% {
+        transform: translateY(0) translateX(0) scale(0.8);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(-120vh) translateX(5vw) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* MOBİL UYUMLULUK */
+@media (max-width: 768px) {
+    body {
+        cursor: default; /* Mobilde özel imleci kapat */
+    }
+    .sparkle-cursor {
+        display: none; /* Mobilde imleci gösterme */
+    }
+    section {
+        padding: 80px 20px;
+    }
+    .gallery-grid {
+        gap: 40px;
+    }
+    .polaroid {
+        transform: rotate(0deg) !important; /* Mobilde dönme efektini kaldır */
+    }
+}
